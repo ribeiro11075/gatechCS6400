@@ -1,0 +1,95 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="col-lg-8 col-md-10 col-sm-10 col-xs-10 container col-centered text-centered container-bottom">
+    <h1>Add New Resource</h1>
+    <form class="col-centered col-lg-10" action="" id="resourceForm" method="POST">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="label-left" for="inputOwner">Owner</label>
+            <input type="text" class="form-control" id="inputOwner" name="inputOwner" placeholder={{ session['username'] }} readonly>
+          </div>
+          <div class="form-group">
+            <label class="label-left required-field" for="inputResourceName">Resource Name</label>
+            <input type="text" class="form-control required" id="inputResourceName" name="inputResourceName" placeholder="Resource Name">
+          </div>
+          <div class="form-group">
+            <label class="label-left required-field" for="inputprimaryESF">Primary ESF</label>
+            <select class="form-control required" id="inputPrimaryESF" name="inputPrimaryESF">
+              <option selected disabled></option>
+              {% for esf_id, description in esfs.items() %}
+              <option value={{esf_id}}>{{description}}</option>
+    	      {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="label-left" for="inputModel">Model</label>
+            <input type="text" class="form-control" id="inputModel" name="inputModel" placeholder="Model">
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label class="label-left required-field" for="inputLon">Longitude</label>
+              <input type="text" class="form-control required" id="inputLon" name="inputLon" placeholder="Longitude">
+            </div>
+            <div class="form-group col-md-6">
+              <label class="label-left required-field" for="inputLat">Latitude</label>
+              <input type="text" class="form-control required" id="inputLat" name="inputLat" placeholder="Latitude">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="label-left" for="inputMaxDistance">Maximum distance</label>
+            <input type="text" class="form-control" id="inputMaxDistance" name="inputMaxDistance" placeholder="Maximum distance">
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label class="label-left required-field" for="inputCost">Cost</label>
+              <input type="text" class="form-control required" id="inputCost" name="inputCost" placeholder="Cost ($)">
+            </div>
+            <div class="form-group col-md-6">
+              <label class="label-left required-field" for="inputPer">Per</label>
+              <select class="form-control required" id="inputPer" name="inputPer">
+              <option selected disabled></option>
+              {% for cost_per in cost_pers %}
+              <option value={{cost_per}}>{{cost_per}}</option>
+    	      {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label  class="label-left" for="inputCapabilities">Capabilities</label>
+            <select multiple type="text" class="form-control  multiselect-height" id="inputCapabilities" name="inputCapabilities">
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="label-left" for="inputCapabilitiesAdd">Add Capability</label>
+            <input type="text" class="form-control" id="inputCapabilitiesAdd" name="inputCapabilitiesAdd" placeholder="Capability">
+          </div>
+          <div class="row">
+	    <div class="col-lg-12">
+              <button id="addCapability" class="btn btn-lg btn-primary pull-right" type="button">Add</button>
+              <button id="removeCapability" class="btn btn-lg btn-danger pull-right multi-button-margin" type="button">Remove</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="label-left secondary-esf-margin" for="inputSecondaryESFs">Additional ESFs</label>
+            <select multiple class="form-control multiselect-height" id="inputSecondaryESFs" name="inputSecondaryESFs">
+              {% for esf_id, description in esfs.items() %}
+              <option value={{esf_id}}>{{description}}</option>
+    	      {% endfor %}
+            </select>
+          </div>
+        </div>
+      </div>
+      {% for e in error %}
+      <div class="alert alert-danger">{{e}}</div>
+      {% endfor %}
+      <div class="form-group">
+        <button id="addResource" class="btn btn-lg btn-primary pull-right" type="submit" name="button" value="submit">Submit</button>
+      	<a id="cancel" class="btn btn-lg btn-danger pull-right multi-button-margin" href="/menu">Cancel</a>
+      </div>
+    </form>
+</div>
+{% endblock %}

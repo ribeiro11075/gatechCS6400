@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset='utf-8'>
+    <title>CS6400 Project</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <script type= "text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type= "text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script type= "text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <script src="../static/js/custom.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse" >
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/login">CS6400</a>
+	</div>
+	<ul class="nav navbar-nav">
+		<li><a href="/">Home</a></li>
+		<li><a href="/resource">Add Resource</a></li>
+		<li><a href="/incident">Add Incident</a></li>
+		<li><a href="/search">Search</a></li>
+		<li><a href="/status">Status</a></li>
+		<li><a href="/report">Report</a></li>
+	</ul>
+        <ul class="nav navbar-nav navbar-right">
+          {% if session['logged_in'] == True %}
+      	  <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{ session['username'] }}</a></li>
+          <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+          {% else %}
+          <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+  <!--
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-success">{{message}}</div>
+    {% endfor %}
+  -->
+
+  <!-- Code to make the flash messages more tractable, with "X" to close the message -->
+      {%with messages = get_flashed_messages(with_categories=true)%}
+      {%if messages%}
+      {% for category, message in messages %}
+      <div class="alert alert-{{category}} alert-dismissable" role="alert">
+       <button type="button" class="close" data-dismiss="alert" aria-label ="close">
+           <span aria-hidden="true">&times;</span>
+       </button>
+          {{message}}
+      </div>
+      {%endfor%}
+      {%endif%}
+      {%endwith%}
+
+    {% block body %}
+    {% endblock %}
+  </body>
+</html>

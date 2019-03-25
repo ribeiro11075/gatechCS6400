@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+	<body>
+		<!-- This form is used twice so better to put it in one place and make all changes here -->
+		<div class="form-group">
+			<div class="row">
+				<label >Incident ID</label>
+				<input type="text" class="width:50px" name="incident_id" value="{{search_params[2]}}" placeholder="{{search_params[2]}}" readonly>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="row">
+				<label>Abrreviation</label>
+				<input type="text" class="width:50px" name="abbreviation" value="{{search_params[3]}}" placeholder="{{search_params[3]}}" readonly>
+			</div>
+		</div>
+		<div class="form-group">
+			<label>Resource ID</label>
+			<input type="text" class="width:50px" name="resource_id" value="{{row.0}}" readonly>
+		</div>
+		<div class="form-group">
+			<label>Resource Name:</label>
+			<input type="text" class="width:50px" name="resource_name" value="{{row.1}}" readonly>
+		</div>
+		<div class="form-group">
+			<label>Owner:</label>
+			<input type="text" class="width:50px" name="owner" value="{{row.2}}" readonly>
+		</div>
+		<div class="form-group">
+			<label>Cost:</label>
+			<input type="text" class="width:50px" name="cost" value="{{row.3|format_cost}}/{{row.6}}" readonly>
+		</div>
+		<div class="form-group">
+			<label>Status:</label>
+			<input type="text" class="width:50px" name="status" value="{{row.4}}" readonly>
+		</div>
+		<div class="form-group">
+			<label>Next Available:</label>
+			<input type="text" class="width:50px" name="next_available" value="{{row.5}}" readonly>
+		</div>
+		<div class="form-group">
+			<label class="required-field" for="inputRequestDate">Requested Start Date:</label>
+			<input type="date" class="width:50px" name="requested_start_date" value="" placeholder="Available" required>
+<!-- 	        <input class="form-control read-only-background" id="requestDate" name="requestDate" placeholder="MM/DD/YYYY" type="text" readonly> -->
+		</div>
+		{% if search_params[2] %}
+
+		<div class="form-group">
+			<label>Distance:</label>
+			<input type="text" class="width:50px" name="distance" value="{{row.7|format_distance}}" placeholder="{{row.7|format_distance}}" readonly>
+		</div>
+		{% endif %}
+
+	<div class="form-group">
+		<label class="required-field" for="inputExpectedReturnDate">Expected Return Date:</label>
+		<input type="date" class="width:50px" name="expected_return_date" value="" placeholder="" required>
+		</div>
+	</body>

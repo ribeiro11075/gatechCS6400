@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="col-lg-8 col-md-10 col-sm-10 col-xs-10 container-fluid col-centered text-centered container-bottom">
+  <h1>Resource Report By Primary ESF</h1>
+  <table class="table table-striped">
+    <thead class="table-header">
+      <tr>
+        <th class="table-header-center">ESF #</th>
+        <th class="table-header-center">Primary ESF Description</th>
+        <th class="table-header-center">Total Resources</th>
+        <th class="table-header-center">Resources In Use</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for esf_count in esf_counts %}
+      <tr>
+        <td>{{esf_count[0]}}</td>
+        <td>{{esf_count[1]}}</td>
+        <td>{{esf_count[2]}}</td>
+        <td>{{esf_count[3]}}</td>
+      </tr>
+      {% endfor %}
+  <tfoot class="table-footer">
+    <tr>
+      <td></td>
+      <td>Total</td>
+      <td>{{total_count}}</td>
+      <td>{{used_count}}</td>
+    </tr>
+  </tfoot>
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

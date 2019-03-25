@@ -1,0 +1,132 @@
+{% extends 'layout.html' %}
+
+{% block body%}
+<div class="col-lg-8 col-md-10 col-sm-10 col-xs-10 container-fluid col-centered text-centered container-bottom" style="min-width:1000px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8">
+          <h1 class="text-left">Search Results</h1>
+          <h5 class="text-left">Incident Name: {{search_params[3]}}-{{search_params[2]}}: {{search_params[6]}} (Keyword: {{search_params[0]}} | ESF: {{search_params[1]}} | Location: {{search_params[4]|format_distance}} )</h5>
+        </div>
+        <div class="col-sm-2">
+          <h1><a href=""  name="btnSearch" class="btn btn-primary btn-rounded btn-warning btn-right btn-lg my-0" data-toggle="modal" data-target="#modalsearch">New Search</a>
+            <h1>
+        </div>
+
+      </div>
+    </div>
+    <table class="table table-striped">
+      <thead class="table-header">
+        <tr>
+          <th class="table-header-center">Resource ID</th>
+          <th class="table-header-center">Resource Name</th>
+          <th class="table-header-center">Owner</th>
+          <th class="table-header-center">Cost</th>
+          <th class="table-header-center">Status</th>
+          <th class="table-header-center">Next Available</th>
+          {% if search_params[2] %}
+          <th class="table-header-center">Distance</th>
+          <th class="table-header-center">Action</th>
+          {% endif%}
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for row in results_tbl %}
+          <tr>
+          <td>{{row.0}}</td>
+          <td>{{row.1}}</td>
+          <td>{{row.2}}</td>
+          <td>{{row.3|format_cost}}/{{row.6}}</td>
+          <td>{{row.4}}</td>
+          <td>{{row.5|format_date}}</td>
+          {% if search_params[2] %}
+          <td>{{row.7|format_distance}}</td>
+          <td>
+            {% if row.8 == "D" %}
+            <a href="/search/results/deploy/{{row.0}}" name="btnDeploy" class="btn btn-primary btn-danger btn-rounded  btn-xs my-0" data-toggle="modal" data-target="#modaledeploy{{row.0}}">Deploy</a>
+            {% elif row.8 == "R" %}
+            <a href="/search/results/request/{{row.0}}"  name="btnRequest" class="btn btn-success btn-primary btn-rounded  btn-xs my-0" data-toggle="modal" data-target="#modalrequest{{row.0}}">Request</a>
+            {% elif row.8 =="U" %}
+            <a name="btnDeploy" class="btn btn-primary btn-rounded  btn-xs my-0" disabled >In Use</a>
+            {% elif row.8 =="CP" %}
+            <a name="btnDeploy" class="btn btn-primary btn-rounded  btn-xs my-0" disabled >Pending Request</a>
+            {% elif row.8 =="C" %}
+            <a name="btnDeploy" class="btn btn-primary btn-rounded  btn-xs my-0" disabled >Previously Deployed</a>
+            {% elif row.8 =="CD" %}
+            <a name="btnDeploy" class="btn btn-primary btn-rounded  btn-xs my-0" disabled >Currently Deployed</a>
+            {% endif %}
+          </td>
+          {% endif %}
+        </tr>
+        <div id="modalrequest{{row.0}}" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h3 class="modal-title">Request this resource</h3>
+            </div>
+            <div class="modal-body">
+              <form action="{{ url_for('search_results_request') }}" method="POST">
+
+                {% include 'resultsform.html' %}
+
+                 <div class="form-group">
+                   <button type="button" id="cancel" class="btn btn-primary btn-danger multi-button-margin" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" type="submit">Confirm Request</button>
+
+                 </div>
+              </form>
+            </div>
+            </div>
+            </div>
+            </div>
+
+            <div id="modaledeploy{{row.0}}" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h3 class="modal-title">Deploy this resource</h3>
+                </div>
+                <div class="modal-body">
+                  <form action="{{ url_for('search_results_deploy') }}" method="POST">
+
+                      {% include 'resultsform.html' %}
+
+                      <div class="form-group">
+                       <button type="button" id="cancel" class="btn btn-primary btn-danger multi-button-margin" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-primary" type="submit">Confirm Deploy</button>
+                     </div>
+                  </form>
+                </div>
+                </div>
+                </div>
+                </div>
+
+        {% endfor %}
+      </tbody>
+    </table>
+          <div id="modalsearch" class="modal fade " role="dialog">
+              <div class="modal-dialog">
+              <div class="modal-content col-lg-12 container-fluid col-centered text-centered container-bottom">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Search Parameters</h3>
+              </div>
+              <div class="modal-body">
+                <form  class="col-centered col-lg-11" action="{{ url_for('results') }}" id="searchForm"  method="POST">
+                  <div>
+                     {% include 'searchform.html' %}
+                     <div class="form-group">
+                      <button type="button" class=" btn btn-lg btn-primary pull-left btn-default btn-danger" data-dismiss="modal">Close</button>
+             				</div>
+                  </div>
+                </form>
+
+              </div>
+              </div>
+              </div>
+
+            </div>
+{% endblock body%}

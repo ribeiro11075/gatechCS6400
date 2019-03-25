@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="col-lg-5 col-md-6 col-sm-8 col-xs-10 container-fluid col-centered text-centered container-bottom ">
+      <h1>CS6400 Project</h1>
+      <h4>Emergency Resource Management System (EMRS)</h4>
+      <form class="col-centered col-lg-10" action="" method="POST">
+<div class="form-group">
+      <label class="label-left" for="inputName">Username</label>
+      <input type="username" name="inputUsername" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+</div>
+<div class="form-group">
+      <label class="label-left" for="inputPassword">Password</label>
+     <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
+</div>
+      {% if error %}
+      <div class="alert alert-danger">{{error}}</div>
+      {% endif %}
+      <button id="btnSignUp" class="btn btn-lg btn-primary pull-right" type="submit" name="button" value="submit">Log In</button>
+      </form>
+</div>
+{% endblock %}

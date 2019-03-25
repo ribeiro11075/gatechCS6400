@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="col-lg-6 col-md-8 col-sm-10 col-xs-10 container-fluid col-centered text-centered container-bottom">
+    <h1>Add Incident</h1>
+    <form class="col-centered col-lg-10" action="" autocomplete="off" id="incidentForm" method="POST">
+      <div class="row">
+        <div class="form-group col-md-8">
+          <label class="label-left required-field" for="inputDeclaration">Declaration</label>
+          <select class="form-control" id="inputDeclaration" name="inputDeclaration">
+              <option selected disabled></option>
+              {% for abbreviation, description in incident_types.items() %}
+              <option value={{abbreviation}}>{{description}}</option>
+    	      {% endfor %}
+          </select>
+        </div>
+        <div class="form-group col-md-4">
+          <label class="label-left required-field" for="inputDate">Incident Date</label>
+          <input class="form-control read-only-background" id="incidentDate" name="incidentDate" placeholder="MM/DD/YYYY" type="text" readonly>
+        </div>
+      </div>
+      <div class="form-group">
+          <label class="label-left required-field" for="inputDescription">Description</label>
+          <input type="text" class="form-control" id="inputDescription" name="inputDescription" placeholder="Description">
+      </div>
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label class="label-left required-field" for="inputLon">Longitude</label>
+          <input type="text" class="form-control" id="inputLon" name="inputLon" placeholder="Longitude">
+        </div>
+        <div class="form-group col-md-6">
+          <label class="label-left required-field" for="inputLat">Latitude</label>
+          <input type="text" class="form-control" id="inputLat" name="inputLat" placeholder="Latitude">
+        </div>
+      </div>
+      	{% for e in error %}
+      <div class="alert alert-danger">{{e}}</div>
+      	{% endfor %}
+  	<div class="form-group">
+          <button id="addIncident" class="btn btn-lg btn-primary pull-right" type="submit" name="button" value="submit">Submit</button>
+          <a id="cancel" class="btn btn-lg btn-danger pull-right multi-button-margin" href="/menu">Cancel</a>
+  	</div>
+    </form>
+</div>
+{% endblock %}

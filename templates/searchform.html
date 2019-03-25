@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+	<body>
+		<!-- This form is used twice so better to put it in one place and make all changes here -->
+		<form class="col-centered col-lg-9" action= "{{ url_for('results') }}" id="searchForm" method="POST">
+
+				<div class="form-group">
+					<label class="label-left" for="inputKeyword">Keyword</label>
+					<input type="search" class="form-control" id="inputKeyword" name="inputKeyword">
+					<p id="inputKeywordHelp" class="form-text text-muted text-left small">
+				   Keyword search on the resource name, model, capabilities or primary/secondary ESFs
+				    </p>
+				</div>
+
+				<div class="form-group">
+					<label class="label-left" for="inputESF">ESF</label>
+					<select class="form-control" name="inputESF">
+						<option></option>
+				        {% for esf_id, description in esfs.items() %}
+						<option value={{esf_id}}>{{description}}</option>
+						{% endfor %}
+					</select>
+					<p id="inputESFHelp" class="form-text text-muted text-left small">
+					ESF to search all resources with the same primary or secondardy ESF
+					</p>
+				</div>
+					<div class="form-group">
+						<label class="label-left" for="inputLocation">Location</label>
+						<input type="number" class="form-control" id="inputLocation" name="inputLocation" step="1">
+						<p id="inputLocationHelp" class="form-text text-muted text-left small">
+				        Maximum radius of resources from specified incident in kilometers
+						</p>
+					</div>
+						<div class="form-group">
+							<label class="label-left" for="inputIncident">Incident</label>
+							<select class="form-control" id="inputIncident" name="inputIncident" placeholder="Incident">
+								<option></option>
+				                {% for row in incidents %}
+								<option name="optionIncident" value="{{row.0}}:{{row.1}}" >{{row.0}}:{{row.1}}</option>
+			                {% endfor %}
+							</select>
+							<p id="inputIncidentHelp" class="form-text text-muted text-left small">
+					        You will be unable to request and/or deploy resources without selecting an incident
+					        </p>
+						</div>
+						<div>
+							<button id="search" class="btn btn-lg btn-primary pull-right" type="submit">Search</button>
+						</div>
+
+					</form>
+				</body>

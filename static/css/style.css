@@ -1,0 +1,85 @@
+body {
+  background: url("../images/home.jpeg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+html{
+  height: 100%;
+}
+
+.navbar {
+  border-radius: 0px;
+}
+
+.col-centered{
+  float: none;
+  margin: 0px auto;
+}
+
+.text-centered{
+  text-align:center;
+  background-color:#eee;
+}
+
+.label-left{
+  float: left;
+}
+
+.container-bottom{
+  padding-bottom: 10px;
+}
+
+.multi-button-margin{
+  margin-right: 5px;
+}
+
+.required-field:after {
+  color: red;
+  content: "*";
+}
+
+.table-footer {
+  background-color: #383838;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+}
+
+.table-header {
+  background-color: #337ab7;
+  color: white;
+}
+
+.table-header-center {
+  text-align: center;
+}
+
+.multiselect-height {
+  height: 150px !important;
+}
+
+.secondary-esf-margin {
+  margin-top:15px;
+}
+
+.read-only-background {
+  background: #fff !important;
+}
+
+/* For Firefox */
+input:-moz-read-only { 
+    background-color: #e2e2e2;
+}
+
+input:read-only { 
+    background-color: #e2e2e2;
+}
+
+.my-error-class {
+    color:#FF0000;  /* red */
+    text-align: left;
+}
+

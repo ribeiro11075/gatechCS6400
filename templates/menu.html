@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="list-group col-centered col-lg-5 col-md-6 col-sm-8 col-xs-10">
+	<div class="list-group-item active"><strong>Main Menu</strong></div>
+	<div style="padding:0px;text-align:right" class="list-group-item">
+	<div><strong> {{ user_details[0] }}</strong></div>
+	<div><strong>{{ user_details[1] }}<strong></div>
+	{% if user_details[2] != None %}
+	<div><strong>{{ user_details[2] }}</strong></div>
+	{% endif %}
+	</div>
+        <a href="/resource" class="list-group-item"><span class="glyphicon glyphicon-plus"></span>  Add New Resource</a>
+        <a href="/incident" class="list-group-item"><span class="glyphicon glyphicon-time"></span>  Declare Emergency Incident</a>
+        <a href="/search" class="list-group-item"><span class="glyphicon glyphicon-search"></span>  Search Resources</a>
+        <a href="/status" class="list-group-item"><span class="glyphicon glyphicon-tasks"></span>  Resource Status</a>
+        <a href="/report" class="list-group-item"><span class="glyphicon glyphicon-list-alt"></span>  Resource Report</a>
+</div>
+{% endblock %}

@@ -1,0 +1,194 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="col-lg-8 col-md-10 col-sm-10 col-xs-10 container-fluid col-centered text-centered container-bottom" style="min-width:800px;">
+  <h1>Resource Status</h1>
+    <h4 class="text-left">Resources In Use</h4>
+    <table class="table table-striped">
+      <thead class="table-header">
+        <tr>
+        <th class="table-header-center">Request ID</th>
+          <th class="table-header-center">Resource ID</th>
+          <th class="table-header-center">Resource Name</th>
+          <th class="table-header-center">Incident</th>
+          <th class="table-header-center">Owner</th>
+          <th class="table-header-center">Start Date</th>
+          <th class="table-header-center">Return By</th>
+          <th class="table-header-center">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in inuse %}
+        <tr>
+          <td>{{row.0}}</td>
+          <td>{{row.1}}</td>
+          <td>{{row.2}}</td>
+          <td>{{row.3}}</td>
+          <td>{{row.4}}</td>
+          <td>{{row.5|format_date}}</td>
+          <td>{{row.6|format_date}}</td>
+          <td><button href="/status/return/{{row.0}}" type="button" class="btn btn-primary btn-rounded btn-xs my-0" data-target="#modalreturn{{row.0}}" data-toggle="modal">Return</button></td>
+        </tr>
+        <div id="modalreturn{{row.0}}" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+           <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h3 class="modal-title">Return this Resource?</h3>
+            </div>
+            <div class="modal-body">
+              <form action="{{ url_for('status_return') }}" method="POST">
+
+                {% include 'statusform.html' %}
+
+                 <div class="form-group">
+                   <button type="button" id="cancel" class="btn btn-primary btn-danger multi-button-margin" data-dismiss="modal">No</button>
+                    <button class="btn btn-primary" type="submit">Yes</button>
+
+                 </div>
+              </form>
+            </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </tbody>
+    </table>
+    <h4 class="text-left">Resources Requested By Me</h4>
+    <table class="table table-striped">
+      <thead class="table-header">
+        <tr>
+          <th class="table-header-center">Request ID</th>
+          <th class="table-header-center">Resource ID</th>
+          <th class="table-header-center">Resource Name</th>
+          <th class="table-header-center">Incident</th>
+          <th class="table-header-center">Owner</th>
+          <th class="table-header-center">Start Date</th>
+          <th class="table-header-center">Return By</th>
+          <th class="table-header-center">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+          {% for row in myrequests %}
+        <tr>
+          <td>{{row.0}}</td>
+          <td>{{row.1}}</td>
+          <td>{{row.2}}</td>
+          <td>{{row.3}}</td>
+          <td>{{row.4}}</td>
+          <td>{{row.5|format_date}}</td>
+          <td>{{row.6|format_date}}</td>
+          <td><button href="/status/cancel/{{row.0}}" type="button" class="btn btn-primary btn-rounded btn-xs my-0" data-toggle = "modal" data-target="#modalcancel{{row.0}}">Cancel</button></td>
+        </tr>
+
+        <div id="modalcancel{{row.0}}" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+           <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h3 class="modal-title">Cancel this Request?</h3>
+            </div>
+            <div class="modal-body">
+              <form action="{{ url_for('status_cancel') }}" method="POST">
+                {% include 'statusform.html' %}
+
+                 <div class="form-group">
+                   <button type="button" id="cancel" class="btn btn-primary btn-danger multi-button-margin" data-dismiss="modal">No</button>
+                    <button class="btn btn-primary" type="submit">Yes</button>
+
+                 </div>
+              </form>
+            </div>
+            </div>
+          </div>
+        </div>
+
+        {% endfor %}
+      </tbody>
+    </table>
+    <h4 class="text-left">Resource Requests Received By Me</h4>
+    <table class="table table-striped">
+      <thead class="table-header">
+        <tr>
+          <th class="table-header-center">Request ID</th>
+          <th class="table-header-center">Resource ID</th>
+          <th class="table-header-center">Resource Name</th>
+          <th class="table-header-center">Incident</th>
+          <th class="table-header-center">Requestor</th>
+          <th class="table-header-center">Start Date</th>
+          <th class="table-header-center">Return By</th>
+          <th class="table-header-center">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+          {% for row in myresponses %}
+        <tr>
+          <td>{{row.0}}</td>
+          <td>{{row.1}}</td>
+          <td>{{row.2}}</td>
+          <td>{{row.3}}</td>
+          <td>{{row.4}}</td>
+          <td>{{row.5|format_date}}</td>
+          <td>{{row.6|format_date}}</td>
+          {% if row.7 == "U" %}
+          <td>
+            <a name="btnDeploy" class="btn btn-primary btn-rounded  btn-xs my-0" disabled >Deploy</a>
+            <button href="" type="button" class="btn btn-danger btn-rounded btn-xs my-0" data-toggle = "modal" data-target="#modalreject{{row.0}}">Reject</button>
+          </td>
+          {% else %}
+          <td>
+            <button href="" type="button" class="btn btn-primary btn-rounded btn-xs my-0" data-toggle = "modal" data-target="#modaldeploy{{row.0}}">Deploy</button>
+            <button href="" type="button" class="btn btn-danger btn-rounded btn-xs my-0" data-toggle = "modal" data-target="#modalreject{{row.0}}">Reject</button>
+          </td>
+          {%endif%}
+        </tr>
+
+        <div id="modaldeploy{{row.0}}" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+           <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h3 class="modal-title">Deploy this Resource?</h3>
+            </div>
+            <div class="modal-body">
+              <form action="{{ url_for('status_deploy') }}" method="POST">
+                {% include 'statusform.html' %}
+
+                 <div class="form-group">
+                   <button type="button" id="cancel" class="btn btn-primary btn-danger multi-button-margin" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" type="submit">Deploy</button>
+
+                 </div>
+              </form>
+            </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="modalreject{{row.0}}" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+           <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h3 class="modal-title">Reject this Request?</h3>
+            </div>
+            <div class="modal-body">
+              <form action="{{ url_for('status_reject') }}" method="POST">
+                {% include 'statusform.html' %}
+
+                 <div class="form-group">
+                   <button type="button" id="cancel" class="btn btn-primary btn-danger multi-button-margin" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" type="submit">Reject</button>
+
+                 </div>
+              </form>
+            </div>
+            </div>
+          </div>
+        </div>
+
+        {% endfor%}
+      </tbody>
+    </table>
+</div>
+{% endblock %}

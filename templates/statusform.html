@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<body>
+		<!-- This form is used twice so better to put it in one place and make all changes here -->
+		<div class="form-group">
+			<label>Request ID</label>
+			<input type="text" class="width:50px" name="request_id" value="{{row.0}}" readonly>
+		</div>
+			<div class="form-group">
+			<label>Resource ID</label>
+			<input type="text" class="width:50px" name="resource_id" value="{{row.1}}" readonly>
+			</div>
+		<div class="form-group">
+			<label>Resource Name:</label>
+			<input type="text" class="width:50px" name="resource_name" value="{{row.2}}" readonly>
+			</div>
+		<div class="form-group">
+			<label >Incident</label>
+			<input type="text" class="width:50px" name="incident_id" value="{{row.3}}" readonly>
+		</div>
+		<div class="form-group">
+			<label>Owner:</label>
+			<input type="text" class="width:50px" name="owner" value="{{row.4}}" readonly>
+		</div>
+		<div class="form-group">
+			<label>Start Date:</label>
+			<input type="date" class="width:50px" name="requested_start_date" value="{{row.5}}" placeholder="" readonly>
+		</div>
+		<div class="form-group">
+			<label>Return By:</label>
+			<input type="date" class="width:50px" name="expected_return_date" value="{{row.6}}" placeholder="" readonly>
+		</div>
+	</body>
